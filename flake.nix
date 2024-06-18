@@ -38,8 +38,6 @@
       cresselia = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          # Example of how to include module from Nixpkgs
-          # "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-gnome.nix"
           "${nixpkgs}/nixos/modules/virtualisation/digital-ocean-config.nix"
           "${nixpkgs}/nixos/modules/virtualisation/digital-ocean-image.nix"
 
