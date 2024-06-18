@@ -50,6 +50,13 @@
                 # DO NOT CHANGE THIS
             };
 
+            # TODO: Possibly remove/fix this as needed whenever
+            # github:NixOS/nixpkgs/issues/308404 gets fixed.
+            boot.loader.grub = {
+              # device = "/dev/vda";
+              devices = nixpkgs.lib.mkForce ["/dev/vda"];
+            };
+
             networking.hostName = "cresselia";
 
             nix.extraOptions = ''
