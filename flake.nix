@@ -47,12 +47,10 @@
               useGlobalPkgs = true;
               useUserPackages = true;
 
-              users = {
-                whovian = {
-                  imports = [
-                    ./whovian/home.nix
-                  ];
-                };
+              users.whovian = {
+                imports = [
+                  ./whovian/home.nix
+                ];
               };
             };
 
