@@ -29,8 +29,9 @@
           should let me build the "cresselia" system config, similar to using
           $ nixos-rebuild build .#cresselia 
         $ nix build .#nixosConfigurations.cresselia.config.system.build.digitalOceanImage
-          should let me build the "cresselia" system config, similar to using
-          $ nixos-rebuild build .#cresselia 
+          should let me build the "cresselia" system config, as an image for
+          use to create a Digital Ocean Droplet...
+          ... Hopefully.
       */
 
     nixosConfigurations = {
