@@ -40,43 +40,24 @@
         modules = [
           "${nixpkgs}/nixos/modules/virtualisation/digital-ocean-config.nix"
           "${nixpkgs}/nixos/modules/virtualisation/digital-ocean-image.nix"
+          home-manager.nixosModules.home-manager
 
           {
-            system = {
-              configurationRevision = self.shortRev or self.dirtyShortRev or "dirty";
-              stateVersion = "24.11";
-                # DO NOT CHANGE THIS
-            };
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
 
-            # TODO: Possibly remove/fix this as needed whenever
-            # github:NixOS/nixpkgs/issues/308404 gets fixed.
-            boot.loader.grub = {
-              device = "/dev/vda";
-              devices = nixpkgs.lib.mkForce ["/dev/vda"];
-            };
-
-            networking.hostName = "cresselia";
-
-            time.timeZone = "America/New_York";
-
-            nix = {
-              extraOptions = ''
-                experimental-features = nix-command flakes
-              '';
-              settings = {
-                trusted-users = [
-                  # "whovian"
-                  "vgmoose"
-                ];
+              users = {
+                whovian = {
+                  imports = [
+                    ./whovian/
+                  ];
+                };
               };
             };
 
-            services.do-agent.enable = true;
 
-            environment.shells = [
-              pkgs.zsh
-            ];
-
+        ### SYSTEM SETTINGS ###
             users = {
                 defaultUserShell = pkgs.zsh;
                 groups = {
@@ -118,24 +99,32 @@
               };
             };
 
-            services.openssh = {
-              enable = true;
-              settings = {
-                PasswordAuthentication = false;
-                KbdInteractiveAuthentication = false;
-              };
+            system = {
+              configurationRevision = self.shortRev or self.dirtyShortRev or "dirty";
+              stateVersion = "24.11";
+                # DO NOT CHANGE THIS
             };
 
-            programs = {
-              nano.enable = true;
-              screen.enable = true;
-              zsh = {
-                enable = true;
-                shellInit = '' zsh-newuser-install () {} '';
-                ohMyZsh = {
-                  enable = true;
-                  theme = "bira";
-                };
+            # TODO: Possibly remove/fix this as needed whenever
+            # github:NixOS/nixpkgs/issues/308404 gets fixed.
+            boot.loader.grub = {
+              device = "/dev/vda";
+              devices = nixpkgs.lib.mkForce ["/dev/vda"];
+            };
+
+            networking.hostName = "cresselia";
+
+            time.timeZone = "America/New_York";
+
+            nix = {
+              extraOptions = ''
+                experimental-features = nix-command flakes
+              '';
+              settings = {
+                trusted-users = [
+                  # "whovian"
+                  "vgmoose"
+                ];
               };
             };
 
@@ -157,6 +146,35 @@
               pkgs.xxd
               pkgs.yq
             ];
+
+            environment.shells = [
+              pkgs.zsh
+            ];
+
+            programs = {
+              nano.enable = true;
+              screen.enable = true;
+              zsh = {
+                enable = true;
+                shellInit = '' zsh-newuser-install () {} '';
+                ohMyZsh = {
+                  enable = true;
+                  theme = "bira";
+                };
+              };
+            };
+
+            services = {
+              do-agent.enable = true;
+              openssh = {
+                enable = true;
+                settings = {
+                  PasswordAuthentication = false;
+                  KbdInteractiveAuthentication = false;
+                };
+              };
+            };
+        ### SYSTEM SETTINGS ###
           }
         ];
       };
