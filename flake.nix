@@ -59,9 +59,17 @@
 
             time.timeZone = "America/New_York";
 
-            nix.extraOptions = ''
+            nix = {
+              extraOptions = ''
                 experimental-features = nix-command flakes
               '';
+              settings = {
+                trusted-users = [
+                  "whovian"
+                  "vgmoose"
+                ];
+              };
+            };
 
             services.do-agent.enable = true;
 
