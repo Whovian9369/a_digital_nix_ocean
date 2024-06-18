@@ -51,11 +51,13 @@
             # TODO: Possibly remove/fix this as needed whenever
             # github:NixOS/nixpkgs/issues/308404 gets fixed.
             boot.loader.grub = {
-              # device = "/dev/vda";
+              device = "/dev/vda";
               devices = nixpkgs.lib.mkForce ["/dev/vda"];
             };
 
             networking.hostName = "cresselia";
+
+            time.timeZone = "America/New_York";
 
             nix.extraOptions = ''
                 experimental-features = nix-command flakes
@@ -132,10 +134,13 @@
             environment.systemPackages = [
               pkgs._7zz
               pkgs.bat
+              pkgs.croc
+              pkgs.curl
               pkgs.dhex
               pkgs.fd
               pkgs.file
               pkgs.git
+              pkgs.jq
               pkgs.lynx
               pkgs.ncdu
               pkgs.progress
