@@ -50,7 +50,7 @@
               users = {
                 whovian = {
                   imports = [
-                    ./whovian/
+                    ./whovian/home.nix
                   ];
                 };
               };
