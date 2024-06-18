@@ -65,7 +65,7 @@
               '';
               settings = {
                 trusted-users = [
-                  "whovian"
+                  # "whovian"
                   "vgmoose"
                 ];
               };
