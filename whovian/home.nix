@@ -54,6 +54,7 @@
       # loadInNixShell = true;
     };
     zsh = {
+      enable = true;
       # Honestly unsure if I should be using `programs.zsh.envExtra` or
       # `programs.zsh.localVariables` here.
       localVariables = {
