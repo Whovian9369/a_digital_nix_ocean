@@ -47,10 +47,20 @@
               useGlobalPkgs = true;
               useUserPackages = true;
 
-              users.whovian = {
-                imports = [
-                  ./whovian/home.nix
-                ];
+              users = {
+                whovian = {
+                  imports = [
+                    ./whovian/home.nix
+                  ];
+                };
+              # TODO: Enable when/if vgmoose wants to use home-manager
+              /*
+                vgmoose = {
+                  imports = [
+                    ./vgmoose/home.nix
+                  ];
+                };
+              */
               };
             };
 
