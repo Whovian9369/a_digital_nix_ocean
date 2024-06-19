@@ -72,6 +72,7 @@
                   whovian = {};
                   vgmoose = {};
                 };
+
               users = {
                 whovian = {
                   name = "whovian";
@@ -182,6 +183,15 @@
                 };
               };
             };
+
+             swapDevices = [
+              {
+                device = "/swapfile";
+                # size = 4*1024;
+                size = 4096;
+                  # in MB
+              }
+            ];
         ### SYSTEM SETTINGS ###
           }
         ];
