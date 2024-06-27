@@ -40,7 +40,15 @@
         modules = [
           "${nixpkgs}/nixos/modules/virtualisation/digital-ocean-config.nix"
           "${nixpkgs}/nixos/modules/virtualisation/digital-ocean-image.nix"
+          # ./vnc.nix
           home-manager.nixosModules.home-manager
+
+          {
+          ### (Hopefully) Replacing /etc/nixos/configuration.nix
+            imports = nixpkgs.lib.optional (builtins.pathExists ./do-userdata.nix) ./do-userdata.nix ++ [
+              ("${nixpkgs}/nixos/modules/virtualisation/digital-ocean-config.nix")
+            ];
+          }
 
           {
             home-manager = {
