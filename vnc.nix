@@ -23,7 +23,9 @@
   environment.systemPackages = [
     pkgs.dejavu_fonts
     pkgs.emojione
+    pkgs.firefox
     pkgs.xclip
+    pkgs.xorg.xeyes
     pkgs.xfce.thunar
     pkgs.xfce.thunar-volman
     pkgs.xfce.xfce4-cpugraph-plugin
