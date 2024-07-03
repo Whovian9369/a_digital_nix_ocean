@@ -4,6 +4,7 @@
     xrdp = {
       enable = true;
       defaultWindowManager = "${pkgs.xfce.xfce4-session}/bin/xfce4-session";
+      openFirewall = false;
     };
 
     xserver = {
