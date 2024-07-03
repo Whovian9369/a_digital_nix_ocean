@@ -40,7 +40,7 @@
         modules = [
           "${nixpkgs}/nixos/modules/virtualisation/digital-ocean-config.nix"
           "${nixpkgs}/nixos/modules/virtualisation/digital-ocean-image.nix"
-          # ./vnc.nix
+          ./vnc.nix
           home-manager.nixosModules.home-manager
 
           {
@@ -188,6 +188,7 @@
                 enable = true;
                 settings = {
                   PasswordAuthentication = false;
+                  PermitRootLogin = "no";
                   KbdInteractiveAuthentication = false;
                 };
               };
