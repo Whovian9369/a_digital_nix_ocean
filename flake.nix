@@ -7,18 +7,24 @@
       url = "github:NixOS/nixpkgs/nixos-unstable";
     };
 
-    ### My extra inputs
+        ### My extra inputs
 
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    flake-programs-sqlite = {
+      url = "github:wamserma/flake-programs-sqlite";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   }; # inputs
 
-  outputs = { self, nixpkgs, home-manager, ... }:
+  outputs = { self, nixpkgs, home-manager, flake-programs-sqlite, ... }:
   let
+    system = "x86_64-linux";
     pkgs = import nixpkgs {
-      system = "x86_64-linux";
+      inherit system;
       config.allowUnfree = true;
     };
   in
@@ -42,6 +48,7 @@
           "${nixpkgs}/nixos/modules/virtualisation/digital-ocean-image.nix"
           ./vnc.nix
           home-manager.nixosModules.home-manager
+          flake-programs-sqlite.nixosModules.programs-sqlite
 
           {
           ### (Hopefully) Replacing /etc/nixos/configuration.nix
@@ -180,6 +187,15 @@
                   theme = "bira";
                 };
               };
+              command-not-found = {
+                enable = true;
+                dbPath = flake-programs-sqlite.packages.${system}.programs-sqlite;
+              };
+              nix-index = {
+                enable = true;
+                enableBashIntegration = false;
+                enableZshIntegration = false;
+              };
             };
 
             services = {
@@ -194,7 +210,7 @@
               };
             };
 
-             swapDevices = [
+            swapDevices = [
               {
                 device = "/swapfile";
                 # size = 4*1024;
