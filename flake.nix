@@ -48,6 +48,7 @@
           "${nixpkgs}/nixos/modules/virtualisation/digital-ocean-config.nix"
           "${nixpkgs}/nixos/modules/virtualisation/digital-ocean-image.nix"
           ./vnc.nix
+          ./docker.nix
           home-manager.nixosModules.home-manager
           flake-programs-sqlite.nixosModules.programs-sqlite
 
