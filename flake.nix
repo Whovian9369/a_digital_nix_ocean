@@ -7,7 +7,7 @@
       url = "github:NixOS/nixpkgs/nixos-unstable";
     };
 
-        ### My extra inputs
+    ### My extra inputs
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -149,7 +149,7 @@
               '';
               settings = {
                 trusted-users = [
-                  # "whovian"
+                  "whovian"
                   "vgmoose"
                 ];
               };
