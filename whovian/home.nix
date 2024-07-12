@@ -40,7 +40,8 @@
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
-    pkgs.binwalk
+
+    # pkgs.binwalk
     pkgs.cdecrypt
     pkgs.cdecrypt
     pkgs.colorized-logs
