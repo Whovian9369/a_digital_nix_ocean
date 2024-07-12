@@ -18,9 +18,11 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
 
+  /*
   my_packages = {
     hactoolnet-bin = pkgs.callPackage ./packages/hactoolnet-bin.nix {};
   };
+  */
   home.packages = [
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
@@ -47,7 +49,7 @@
     pkgs.progress
     pkgs.python3
 
-    my_packages.hactoolnet-bin
+    # my_packages.hactoolnet-bin
   ];
 
   programs = {
