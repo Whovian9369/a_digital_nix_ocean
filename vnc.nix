@@ -23,7 +23,7 @@
 
   environment.systemPackages = [
     pkgs.dejavu_fonts
-    pkgs.emojione
+    # pkgs.emojione
     pkgs.firefox
     pkgs.xclip
     pkgs.xorg.xeyes
