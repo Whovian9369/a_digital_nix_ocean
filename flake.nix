@@ -106,6 +106,21 @@
                     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKUpUbEtBSySMW82Wm4xOtlGKxnPf8bqKxVMRJH3Sycx"
                   ];
                 };
+                compucat = {
+                  name = "compucat";
+                  description = "Compucat";
+                  shell = pkgs.zsh;
+                  initialPassword = "abcde"; # I need to log in somehow
+                  isNormalUser = true;
+                  extraGroups = [
+                    "wheel"
+                      # Enable 'sudo' for the user.
+                  ];
+                  openssh.authorizedKeys.keys = [
+                    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM5B9hJ2GAgKEFBi/5r7xYpWpEyZDZ1/K4V2/q4Lh/iV"
+                    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOj07g4lkqwRNfLg8UlZXs3s90NRsUyDm2ycikQU2oaf"
+                  ];
+                };
                 vgmoose = {
                   name = "vgmoose";
                   description = "vgmoose";
