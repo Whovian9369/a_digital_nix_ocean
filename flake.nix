@@ -78,6 +78,10 @@
                   imports = [
                     ./vgmoose/home.nix
                   ];
+                compucat = {
+                  imports = [
+                    ./compucat/home.nix
+                  ];
                 };
               */
               };
