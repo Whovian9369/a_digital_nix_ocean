@@ -1,5 +1,11 @@
 { config, pkgs, ... }:
 
+let
+  my_packages = {
+    hactoolnet-bin = pkgs.callPackage ./packages/hactoolnet-bin.nix {};
+    rom-properties = pkgs.callPackage ./packages/rom-properties/package.nix {};
+  };
+in
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -18,11 +24,6 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
 
-  /*
-  my_packages = {
-    hactoolnet-bin = pkgs.callPackage ./packages/hactoolnet-bin.nix {};
-  };
-  */
   home.packages = [
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
@@ -50,7 +51,8 @@
     pkgs.progress
     pkgs.python3
 
-    # my_packages.hactoolnet-bin
+    my_packages.hactoolnet-bin
+    my_packages.rom-properties
   ];
 
   programs = {
