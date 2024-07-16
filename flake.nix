@@ -60,6 +60,8 @@
           }
 
           {
+
+          ### Home-Manager ###
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
