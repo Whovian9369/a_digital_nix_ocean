@@ -95,6 +95,7 @@
                 groups = {
                   whovian = {};
                   vgmoose = {};
+                  compucat = {};
                 };
 
               users = {
