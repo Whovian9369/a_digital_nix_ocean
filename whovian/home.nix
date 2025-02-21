@@ -1,10 +1,7 @@
-{ config, pkgs, ... }:
+{ config, ninfs, pkgs, rom-properties, ... }:
 
 let
-  my_packages = {
-    hactoolnet-bin = pkgs.callPackage ./packages/hactoolnet-bin.nix {};
-    rom-properties = pkgs.callPackage ./packages/rom-properties/package.nix {};
-  };
+  my_packages.hactoolnet = pkgs.callPackage ./packages/hactoolnet/package.nix {};
 in
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -19,7 +16,7 @@ in
   # You should not change this value, even if you update Home Manager. If you do
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
-  home.stateVersion = "24.05"; # Please read the comment before changing.
+  home.stateVersion = "25.05"; # Please read the comment before changing.
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
@@ -42,17 +39,20 @@ in
     #   echo "Hello, ${config.home.username}!"
     # '')
 
-    # pkgs.binwalk
+    pkgs.binwalk
     pkgs.cdecrypt
     pkgs.cdecrypt
     pkgs.colorized-logs
     pkgs.hactool
+    pkgs.lftp
     pkgs.lynx
     pkgs.progress
     pkgs.python3
+    pkgs.rclone
 
-    my_packages.hactoolnet-bin
-    my_packages.rom-properties
+    pkgs.python311Packages.internetarchive
+
+    my_packages.hactoolnet
   ];
 
   programs = {

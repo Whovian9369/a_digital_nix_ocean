@@ -19,9 +19,76 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    rom-properties = {
+      url = "github:Whovian9369/rom-properties-nix-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    ninfs = {
+      url = "github:ihaveamac/ninfs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    ### Lix! Lix! Lix!
+
+    lix = {
+      url = "git+https://git@git.lix.systems/lix-project/lix";
+        /*
+          Future me, the pattern for using Forgejo URLs is:
+          git+https://git@${domain}/${user_org}/${repo}?ref=refs/tags/${TAG}
+          git+https://git@${domain}/${user_org}/${repo}?rev=${commitHash}
+        */
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-compat.follows = "flake-compat";
+    };
+
+    lix-module = {
+      url = "git+https://git.lix.systems/lix-project/nixos-module";
+        /*
+          Future me, the pattern for using Forgejo URLs is:
+          git+https://git@${domain}/${user_org}/${repo}?ref=refs/tags/${TAG}
+          git+https://git@${domain}/${user_org}/${repo}?rev=${commitHash}
+        */
+      inputs.lix.follows = "lix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+    };
+
+    #########
+    # Extra inputs that I am adding just to make my life easier,
+    # but don't like that they're included >:(
+    #########
+
+    /*
+      Used by:
+      - lix
+    */
+    flake-compat = {
+      url = "github:edolstra/flake-compat";
+    };
+
+    /*
+      Used by:
+      - lix-module
+    */
+    flake-utils = {
+      url = "github:numtide/flake-utils";
+      inputs.systems.follows = "nix-systems_default";
+    };
+
+    /*
+      Used by:
+      - agenix
+      - flake-utils
+    */
+    nix-systems_default = {
+      url = "github:nix-systems/default";
+    };
+
+
   }; # inputs
 
-  outputs = { self, nixpkgs, home-manager, flake-programs-sqlite, ... }:
+  outputs = { self, nixpkgs, home-manager, flake-programs-sqlite, rom-properties, ninfs, ... }:
   let
     system = "x86_64-linux";
     pkgs = import nixpkgs {
@@ -45,21 +112,12 @@
       cresselia = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          "${nixpkgs}/nixos/modules/virtualisation/digital-ocean-config.nix"
           "${nixpkgs}/nixos/modules/virtualisation/digital-ocean-image.nix"
-          ./vnc.nix
           ./docker.nix
           home-manager.nixosModules.home-manager
           flake-programs-sqlite.nixosModules.programs-sqlite
 
-          {
-          ### (Hopefully) Replacing /etc/nixos/configuration.nix
-            imports = nixpkgs.lib.optional (builtins.pathExists ./do-userdata.nix) ./do-userdata.nix ++ [
-              ("${nixpkgs}/nixos/modules/virtualisation/digital-ocean-config.nix")
-            ];
-          }
-
-          {
+        {
 
           ### Home-Manager ###
             home-manager = {
@@ -78,15 +136,9 @@
                   imports = [
                     ./vgmoose/home.nix
                   ];
-                compucat = {
-                  imports = [
-                    ./compucat/home.nix
-                  ];
-                };
               */
               };
             };
-
 
         ### SYSTEM SETTINGS ###
 
@@ -95,7 +147,6 @@
                 groups = {
                   whovian = {};
                   vgmoose = {};
-                  compucat = {};
                 };
 
               users = {
@@ -113,21 +164,7 @@
                     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKUpUbEtBSySMW82Wm4xOtlGKxnPf8bqKxVMRJH3Sycx"
                   ];
                 };
-                compucat = {
-                  name = "compucat";
-                  description = "Compucat";
-                  shell = pkgs.zsh;
-                  initialPassword = "abcde"; # I need to log in somehow
-                  isNormalUser = true;
-                  extraGroups = [
-                    "wheel"
-                      # Enable 'sudo' for the user.
-                  ];
-                  openssh.authorizedKeys.keys = [
-                    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM5B9hJ2GAgKEFBi/5r7xYpWpEyZDZ1/K4V2/q4Lh/iV"
-                    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOj07g4lkqwRNfLg8UlZXs3s90NRsUyDm2ycikQU2oaf"
-                  ];
-                };
+
                 vgmoose = {
                   name = "vgmoose";
                   description = "vgmoose";
@@ -150,16 +187,20 @@
 
             system = {
               configurationRevision = self.shortRev or self.dirtyShortRev or "dirty";
-              stateVersion = "24.11";
+              stateVersion = "25.05";
                 # DO NOT CHANGE THIS
             };
 
-            # TODO: Possibly remove/fix this as needed whenever
-            # github:NixOS/nixpkgs/issues/308404 gets fixed.
-            boot.loader.grub = {
-              device = "/dev/vda";
-              devices = nixpkgs.lib.mkForce ["/dev/vda"];
+          virtualisation.digitalOceanImage.compressionMethod = "bzip2";
+
+          /*
+            boot.loader = {
+              systemd-boot = {
+                enable = true;
+                editor = false;
+              };
             };
+          */
 
             networking.hostName = "cresselia";
 
@@ -191,9 +232,12 @@
               pkgs.ncdu
               pkgs.progress
               pkgs.ripgrep
+              pkgs.unrar
               pkgs.wget
               pkgs.xxd
               pkgs.yq
+              ninfs.packages.x86_64-linux.ninfs
+              rom-properties.packages.x86_64-linux.default
             ];
 
             environment.shells = [
