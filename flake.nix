@@ -1,4 +1,4 @@
-{
+ {
   description = "A Digital Nix Ocean";
   inputs = {
 
@@ -88,7 +88,7 @@
 
   }; # inputs
 
-  outputs = { self, nixpkgs, home-manager, flake-programs-sqlite, rom-properties, ninfs, ... }:
+  outputs = { self, nixpkgs, home-manager, flake-programs-sqlite, rom-properties, ninfs, lix-module, ... }:
   let
     system = "x86_64-linux";
     pkgs = import nixpkgs {
@@ -114,8 +114,9 @@
         modules = [
           "${nixpkgs}/nixos/modules/virtualisation/digital-ocean-image.nix"
           ./docker.nix
-          home-manager.nixosModules.home-manager
           flake-programs-sqlite.nixosModules.programs-sqlite
+          home-manager.nixosModules.home-manager
+          lix-module.nixosModules.default
 
         {
 
@@ -254,10 +255,6 @@
                   enable = true;
                   theme = "bira";
                 };
-              };
-              command-not-found = {
-                enable = true;
-                dbPath = flake-programs-sqlite.packages.${system}.programs-sqlite;
               };
               nix-index = {
                 enable = true;

@@ -41,7 +41,6 @@ in
 
     pkgs.binwalk
     pkgs.cdecrypt
-    pkgs.cdecrypt
     pkgs.colorized-logs
     pkgs.hactool
     pkgs.lftp
