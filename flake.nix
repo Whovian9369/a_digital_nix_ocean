@@ -143,7 +143,7 @@
 
         ### SYSTEM SETTINGS ###
 
-            users = {
+          users = {
                 defaultUserShell = pkgs.zsh;
                 groups = {
                   whovian = {};
@@ -184,13 +184,19 @@
                   ];
                 };
               };
-            };
+          };
 
-            system = {
-              configurationRevision = self.shortRev or self.dirtyShortRev or "dirty";
-              stateVersion = "25.05";
-                # DO NOT CHANGE THIS
-            };
+          system = {
+            configurationRevision = self.shortRev or self.dirtyShortRev or "dirty";
+            stateVersion = "25.05";
+              # DO NOT CHANGE THIS
+          };
+
+          documentation = {
+            enable = false;
+            man.enable = false;
+            nixos.enable = true;
+          };
 
           virtualisation.digitalOceanImage.compressionMethod = "bzip2";
 
