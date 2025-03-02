@@ -231,6 +231,7 @@
               pkgs.croc
               pkgs.curl
               pkgs.dhex
+              pkgs.doctl
               pkgs.fd
               pkgs.file
               pkgs.git
