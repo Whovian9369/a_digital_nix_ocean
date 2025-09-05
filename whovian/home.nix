@@ -68,9 +68,7 @@ in
       enable = true;
       # Honestly unsure if I should be using `programs.zsh.envExtra` or
       # `programs.zsh.localVariables` here.
-      localVariables = {
-        DISABLE_MAGIC_FUNCTIONS = true;
-      };
+      localVariables.DISABLE_MAGIC_FUNCTIONS = true;
       oh-my-zsh = {
         enable = true;
         plugins = [
@@ -95,10 +93,6 @@ in
     #   org.gradle.console=verbose
     #   org.gradle.daemon.idletimeout=3600000
     # '';
-
-    ".zshrc".text = ''
-      eval "$(direnv hook zsh)"
-    '';
   };
 
   # Home Manager can also manage your environment variables through
